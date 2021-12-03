@@ -11,6 +11,11 @@ output "google_project" {
   value       = try(google_project.project[0], {})
 }
 
+output "iam" {
+  description = "The resources created by `mineiros-io/project-iam/google` module."
+  value       = local.iam
+}
+
 # ------------------------------------------------------------------------------
 # OUTPUT ALL INPUT VARIABLES
 # ------------------------------------------------------------------------------

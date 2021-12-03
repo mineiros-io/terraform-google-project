@@ -18,6 +18,12 @@ variable "project_id" {
 # These variables have defaults, but may be overridden.
 # ---------------------------------------------------------------------------------------------------------------------
 
+variable "iam" {
+  type        = any
+  description = "(Optional) List of IAM roles and members to set for the created project."
+  default     = []
+}
+
 variable "org_id" {
   type        = string
   description = "(Optional) The numeric ID of the organization this project belongs to. Changing this forces a new project to be created. Only one of org_id or folder_id may be specified. If the org_id is specified then the project is created at the top level. Changing this forces the project to be migrated to the newly specified organization."
