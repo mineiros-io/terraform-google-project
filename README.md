@@ -85,6 +85,43 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   The project ID. Changing this forces a new project to be created.
 
+- **`iam`**: _(Optional `string`)_
+
+  A list of IAM access.
+
+  Example
+
+  ```hcl
+  iam = [{
+    role    = "roles/viewer"
+    members = ["user:member@example.com"]
+  }]
+  ```
+
+  Each `iam` object accepts the following fields:
+
+  - **`members`**: _(Optional `set(string)`)_
+
+    Identities that will be granted the privilege in role. Each entry can have one of the following values:
+    - `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.
+    - `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.
+    - `user:{emailid}`: An email address that represents a specific Google account. For example, alice@gmail.com or joe@example.com.
+    - `serviceAccount:{emailid}`: An email address that represents a service account. For example, my-other-app@appspot.gserviceaccount.com.
+    - `group:{emailid}`: An email address that represents a Google group. For example, admins@example.com.
+    - `domain:{domain}`: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, google.com or example.com.
+
+    Default is `[]`.
+
+  - **`role`**: _(Optional `string`)_
+
+    The role that should be applied. Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
+
+  - **`authoritative`**: _(Optional `bool`)_
+
+    Whether to exclusively set (authoritative mode) or add (non-authoritative/additive mode) members to the role.
+
+    Default is `true`.
+
 - **`org_id`**: _(Optional `string`)_
 
   The numeric ID of the organization this project belongs to. Changing this forces a new project to be created. Only one of `org_id` or `folder_id` may be specified. If the `org_id` is specified then the project is created at the top level. Changing this forces the project to be migrated to the newly specified organization.
