@@ -11,7 +11,7 @@ locals {
 }
 
 module "iam" {
-  source = "github.com/mineiros-io/terraform-google-project-iam?ref=v0.0.1"
+  source = "github.com/mineiros-io/terraform-google-project-iam?ref=v0.1.0"
 
   for_each = local.iam_map
 
@@ -25,4 +25,6 @@ module "iam" {
   members       = try(each.value.members, [])
   condition     = try(each.value.condition, null)
   authoritative = try(each.value.authoritative, true)
+
+  skip_adding_default_service_accounts = try(each.value.skip_adding_default_service_accounts, false)
 }
