@@ -42,7 +42,7 @@ Most basic usage just setting required arguments:
 
 ```hcl
 module "terraform-google-project" {
-  source = "github.com/mineiros-io/terraform-google-project.git?ref=v0.1.0"
+  source = "github.com/mineiros-io/terraform-google-project.git?ref=v0.2.0"
 
   name       = "My Project"
   project_id = "your-project-id"
@@ -121,6 +121,18 @@ See [variables.tf] and [examples/] for details and use-cases.
     Whether to exclusively set (authoritative mode) or add (non-authoritative/additive mode) members to the role.
 
     Default is `true`.
+
+  - **`skip_adding_default_service_accounts`**: _(Optional `bool`)_
+
+    Whether to skip adding default GCP Service Accounts to specific roles.
+
+    Service Accounts added to non-conditional bindings of `roles/editor`:
+
+    - App Engine default service account (`project-id@appspot.gserviceaccount.com`)
+    - Compute Engine default service account (`project-number-compute@developer.gserviceaccount.com`)
+    - Google APIs Service Agent (`project-number@cloudservices.gserviceaccount.com`)
+
+    Default is `false`.
 
 - **`org_id`**: _(Optional `string`)_
 
