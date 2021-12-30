@@ -8,7 +8,7 @@
 
 # terraform-google-project
 
-A [Terraform] module for [Google Cloud Platform (GCP)][gcp].
+A [Terraform] module for creating and managing [projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects) in [Google Cloud Platform (GCP)][gcp].
 
 **_This module supports Terraform version 1
 and is compatible with the Terraform Google Provider version 4._**
@@ -68,7 +68,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   Default is `true`.
 
-- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(dependencies)`)*<a name="var-module_depends_on"></a>
+- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(dependency)`)*<a name="var-module_depends_on"></a>
 
   A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
 
@@ -92,7 +92,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - [**`iam`**](#var-iam): *(Optional `string`)*<a name="var-iam"></a>
 
-  A list of IAM access.
+  A list of IAM access to apply to the created secret.
 
   Example:
 
@@ -105,7 +105,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   The object accepts the following attributes:
 
-  - [**`members`**](#attr-members-iam): *(Optional `set(string)`)*<a name="attr-members-iam"></a>
+  - [**`members`**](#attr-iam-members): *(Optional `set(string)`)*<a name="attr-iam-members"></a>
 
     Identities that will be granted the privilege in role. Each entry can have one of the following values:
     - `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.
@@ -117,17 +117,17 @@ See [variables.tf] and [examples/] for details and use-cases.
 
     Default is `[]`.
 
-  - [**`role`**](#attr-role-iam): *(Optional `string`)*<a name="attr-role-iam"></a>
+  - [**`role`**](#attr-iam-role): *(Optional `string`)*<a name="attr-iam-role"></a>
 
     The role that should be applied. Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
 
-  - [**`authoritative`**](#attr-authoritative-iam): *(Optional `bool`)*<a name="attr-authoritative-iam"></a>
+  - [**`authoritative`**](#attr-iam-authoritative): *(Optional `bool`)*<a name="attr-iam-authoritative"></a>
 
     Whether to exclusively set (authoritative mode) or add (non-authoritative/additive mode) members to the role.
 
     Default is `true`.
 
-  - [**`skip_adding_default_service_accounts`**](#attr-skip_adding_default_service_accounts-iam): *(Optional `bool`)*<a name="attr-skip_adding_default_service_accounts-iam"></a>
+  - [**`skip_adding_default_service_accounts`**](#attr-iam-skip_adding_default_service_accounts): *(Optional `bool`)*<a name="attr-iam-skip_adding_default_service_accounts"></a>
 
     Whether to skip adding default GCP Service Accounts to specific roles.
     

@@ -37,7 +37,7 @@ section {
   title   = "terraform-google-project"
   toc     = true
   content = <<-END
-    A [Terraform] module for [Google Cloud Platform (GCP)][gcp].
+    A [Terraform] module for creating and managing [projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects) in [Google Cloud Platform (GCP)][gcp].
 
     **_This module supports Terraform version 1
     and is compatible with the Terraform Google Provider version 4._**
@@ -92,8 +92,7 @@ section {
         }
 
         variable "module_depends_on" {
-          type           = any
-          readme_type    = "list(dependencies)"
+          type           = list(dependency)
           description    = <<-END
             A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
           END
@@ -127,7 +126,7 @@ section {
         variable "iam" {
           type           = string
           description    = <<-END
-            A list of IAM access.
+            A list of IAM access to apply to the created secret.
           END
           readme_example = <<-END
             iam = [{
