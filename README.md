@@ -1,19 +1,22 @@
-[<img src="https://raw.githubusercontent.com/mineiros-io/brand/3bffd30e8bdbbde32c143e2650b2faa55f1df3ea/mineiros-primary-logo.svg" width="400"/>][homepage]
+[<img src="https://raw.githubusercontent.com/mineiros-io/brand/3bffd30e8bdbbde32c143e2650b2faa55f1df3ea/mineiros-primary-logo.svg" width="400"/>](https://mineiros.io/?ref=terraform-google-project)
 
-[![Terraform Version][badge-terraform]][releases-terraform]
-[![Google Provider Version][badge-tf-gcp]][releases-google-provider]
-[![Join Slack][badge-slack]][slack]
+[![Build Status](https://github.com/mineiros-io/terraform-google-project/workflows/Tests/badge.svg)](https://github.com/mineiros-io/terraform-google-project/actions)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/mineiros-io/terraform-google-project.svg?label=latest&sort=semver)](https://github.com/mineiros-io/terraform-google-project/releases)
+[![Terraform Version](https://img.shields.io/badge/Terraform-1.x-623CE4.svg?logo=terraform)](https://github.com/hashicorp/terraform/releases)
+[![Google Provider Version](https://img.shields.io/badge/google-4-1A73E8.svg?logo=terraform)](https://github.com/terraform-providers/terraform-provider-google/releases)
+[![Join Slack](https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack)](https://mineiros.io/slack)
 
 # terraform-google-project
 
-A [Terraform] module for [Google Cloud Platform (GCP)][gcp].
+A [Terraform] module for creating and managing [projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects) in [Google Cloud Platform (GCP)][gcp].
 
 **_This module supports Terraform version 1
-and is compatible with the Terraform Google Provider version 3._**
+and is compatible with the Terraform Google Provider version 4._**
 
 This module is part of our Infrastructure as Code (IaC) framework
 that enables our users and customers to easily deploy and manage reusable,
 secure, and production-grade cloud infrastructure.
+
 
 - [Module Features](#module-features)
 - [Getting Started](#getting-started)
@@ -21,9 +24,10 @@ secure, and production-grade cloud infrastructure.
   - [Top-level Arguments](#top-level-arguments)
     - [Module Configuration](#module-configuration)
     - [Main Resource Configuration](#main-resource-configuration)
-    - [Extended Resource Configuration](#extended-resource-configuration)
-- [Module Attributes Reference](#module-attributes-reference)
+- [Module Outputs](#module-outputs)
 - [External Documentation](#external-documentation)
+  - [Google Documentation](#google-documentation)
+  - [Terraform Google Provider Documentation](#terraform-google-provider-documentation)
 - [Module Versioning](#module-versioning)
   - [Backwards compatibility in `0.0.z` and `0.y.z` version](#backwards-compatibility-in-00z-and-0yz-version)
 - [About Mineiros](#about-mineiros)
@@ -58,17 +62,18 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 #### Module Configuration
 
-- **`module_enabled`**: _(Optional `bool`)_
+- [**`module_enabled`**](#var-module_enabled): *(Optional `bool`)*<a name="var-module_enabled"></a>
 
   Specifies whether resources in the module will be created.
 
   Default is `true`.
 
-- **`module_depends_on`**: _(Optional `list(dependencies)`)_
+- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(dependency)`)*<a name="var-module_depends_on"></a>
 
   A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
 
   Example:
+
   ```hcl
   module_depends_on = [
     google_network.network
@@ -77,19 +82,19 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 #### Main Resource Configuration
 
-- **`name`**: **_(Required `string`)_**
+- [**`name`**](#var-name): *(**Required** `string`)*<a name="var-name"></a>
 
   The display name of the project.
 
-- **`project_id`**: **_(Required `string`)_**
+- [**`project_id`**](#var-project_id): *(**Required** `string`)*<a name="var-project_id"></a>
 
   The project ID. Changing this forces a new project to be created.
 
-- **`iam`**: _(Optional `string`)_
+- [**`iam`**](#var-iam): *(Optional `string`)*<a name="var-iam"></a>
 
-  A list of IAM access.
+  A list of IAM access to apply to the created secret.
 
-  Example
+  Example:
 
   ```hcl
   iam = [{
@@ -98,9 +103,9 @@ See [variables.tf] and [examples/] for details and use-cases.
   }]
   ```
 
-  Each `iam` object accepts the following fields:
+  The object accepts the following attributes:
 
-  - **`members`**: _(Optional `set(string)`)_
+  - [**`members`**](#attr-iam-members): *(Optional `set(string)`)*<a name="attr-iam-members"></a>
 
     Identities that will be granted the privilege in role. Each entry can have one of the following values:
     - `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.
@@ -112,59 +117,59 @@ See [variables.tf] and [examples/] for details and use-cases.
 
     Default is `[]`.
 
-  - **`role`**: _(Optional `string`)_
+  - [**`role`**](#attr-iam-role): *(Optional `string`)*<a name="attr-iam-role"></a>
 
     The role that should be applied. Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
 
-  - **`authoritative`**: _(Optional `bool`)_
+  - [**`authoritative`**](#attr-iam-authoritative): *(Optional `bool`)*<a name="attr-iam-authoritative"></a>
 
     Whether to exclusively set (authoritative mode) or add (non-authoritative/additive mode) members to the role.
 
     Default is `true`.
 
-  - **`skip_adding_default_service_accounts`**: _(Optional `bool`)_
+  - [**`skip_adding_default_service_accounts`**](#attr-iam-skip_adding_default_service_accounts): *(Optional `bool`)*<a name="attr-iam-skip_adding_default_service_accounts"></a>
 
     Whether to skip adding default GCP Service Accounts to specific roles.
-
+    
     Service Accounts added to non-conditional bindings of `roles/editor`:
-
+    
     - App Engine default service account (`project-id@appspot.gserviceaccount.com`)
     - Compute Engine default service account (`project-number-compute@developer.gserviceaccount.com`)
     - Google APIs Service Agent (`project-number@cloudservices.gserviceaccount.com`)
 
     Default is `false`.
 
-- **`org_id`**: _(Optional `string`)_
+- [**`org_id`**](#var-org_id): *(Optional `string`)*<a name="var-org_id"></a>
 
   The numeric ID of the organization this project belongs to. Changing this forces a new project to be created. Only one of `org_id` or `folder_id` may be specified. If the `org_id` is specified then the project is created at the top level. Changing this forces the project to be migrated to the newly specified organization.
 
-- **`folder_id`**: _(Optional `string`)_
+- [**`folder_id`**](#var-folder_id): *(Optional `string`)*<a name="var-folder_id"></a>
 
   The numeric ID of the folder this project should be created under. Only one of `org_id` or `folder_id` may be specified. If the `folder_id` is specified, then the project is created under the specified folder. Changing this forces the project to be migrated to the newly specified folder.
 
-- **`billing_account`**: _(Optional `string`)_
+- [**`billing_account`**](#var-billing_account): *(Optional `string`)*<a name="var-billing_account"></a>
 
   The alphanumeric ID of the billing account this project belongs to. The user or service account performing this operation with Terraform must have at minimum Billing Account User privileges (roles/billing.user) on the billing account.
 
-- **`skip_delete`**: _(Optional `bool`)_
+- [**`skip_delete`**](#var-skip_delete): *(Optional `bool`)*<a name="var-skip_delete"></a>
 
   If set to `true`, the Terraform resource can be deleted without deleting the Project via the Google API.
 
   Default is `false`.
 
-- **`labels`**: _(Optional `map(string)`)_
+- [**`labels`**](#var-labels): *(Optional `map(string)`)*<a name="var-labels"></a>
 
   A set of key/value label pairs to assign to the project.
 
-- **`auto_create_network`**: _(Optional `bool`)_
+  Default is `{}`.
 
-  Create the `default` network automatically. If set to `false`, the default network will be deleted. Note that, for quota purposes, you will still need to have 1 network slot available to create the project successfully, even if you set `auto_create_network` to `false`, since the network will exist momentarily. It is recommended to use the `constraints/compute.skipDefaultNetworkCreation` constraint to remove the default network instead of setting `auto_create_network` to `false`.
+- [**`auto_create_network`**](#var-auto_create_network): *(Optional `bool`)*<a name="var-auto_create_network"></a>
+
+  Create the `default` network automatically. If set to `false`, the default network will be deleted. Note that, for quota purposes, you will still need to have 1 network slot available to create the project successfully, even if you set `auto_create_network` to `false`, since the network will exist momentarily. It is recommended to use the `constraints/compute.skip
 
   Default is `true`.
 
-#### Extended Resource Configuration
-
-## Module Attributes Reference
+## Module Outputs
 
 The following attributes are exported in the outputs of the module:
 
@@ -176,15 +181,19 @@ The following attributes are exported in the outputs of the module:
 
   All outputs of the created `google_project` resource.
 
+- **`iam`**
+
+  The resources created by `mineiros-io/project-iam/google` module.
+
 ## External Documentation
 
 ### Google Documentation
 
-- Project: <https://cloud.google.com/resource-manager/docs/creating-managing-projects>
+- Project: https://cloud.google.com/resource-manager/docs/creating-managing-projects
 
 ### Terraform Google Provider Documentation
 
-- <https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project>
+- https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project
 
 ## Module Versioning
 
@@ -234,32 +243,20 @@ Run `make help` to see details on each available target.
 This module is licensed under the Apache License Version 2.0, January 2004.
 Please see [LICENSE] for full details.
 
-Copyright &copy; 2020-2021 [Mineiros GmbH][homepage]
+Copyright &copy; 2020-2022 [Mineiros GmbH][homepage]
 
 
 <!-- References -->
 
 [homepage]: https://mineiros.io/?ref=terraform-google-project
 [hello@mineiros.io]: mailto:hello@mineiros.io
-
-<!-- markdown-link-check-disable -->
-
 [badge-build]: https://github.com/mineiros-io/terraform-google-project/workflows/Tests/badge.svg
-
-<!-- markdown-link-check-enable -->
-
 [badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-google-project.svg?label=latest&sort=semver
 [badge-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
 [badge-terraform]: https://img.shields.io/badge/Terraform-1.x-623CE4.svg?logo=terraform
 [badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
-
-<!-- markdown-link-check-disable -->
-
 [build-status]: https://github.com/mineiros-io/terraform-google-project/actions
 [releases-github]: https://github.com/mineiros-io/terraform-google-project/releases
-
-<!-- markdown-link-check-enable -->
-
 [releases-terraform]: https://github.com/hashicorp/terraform/releases
 [badge-tf-gcp]: https://img.shields.io/badge/google-3.x-1A73E8.svg?logo=terraform
 [releases-google-provider]: https://github.com/terraform-providers/terraform-provider-google/releases
@@ -268,9 +265,6 @@ Copyright &copy; 2020-2021 [Mineiros GmbH][homepage]
 [terraform]: https://www.terraform.io
 [gcp]: https://cloud.google.com/
 [semantic versioning (semver)]: https://semver.org/
-
-<!-- markdown-link-check-disable -->
-
 [variables.tf]: https://github.com/mineiros-io/terraform-google-project/blob/main/variables.tf
 [examples/]: https://github.com/mineiros-io/terraform-google-project/blob/main/examples
 [issues]: https://github.com/mineiros-io/terraform-google-project/issues
@@ -278,5 +272,3 @@ Copyright &copy; 2020-2021 [Mineiros GmbH][homepage]
 [makefile]: https://github.com/mineiros-io/terraform-google-project/blob/main/Makefile
 [pull requests]: https://github.com/mineiros-io/terraform-google-project/pulls
 [contribution guidelines]: https://github.com/mineiros-io/terraform-google-project/blob/main/CONTRIBUTING.md
-
-<!-- markdown-link-check-enable -->
