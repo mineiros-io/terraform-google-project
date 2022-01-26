@@ -231,19 +231,28 @@ section {
     title   = "Module Outputs"
     content = <<-END
       The following attributes are exported in the outputs of the module:
-
-      - **`module_enabled`**
-
-        Whether this module is enabled.
-
-      - **`google_project`**
-
-        All outputs of the created `google_project` resource.
-
-      - **`iam`**
-
-        The resources created by `mineiros-io/project-iam/google` module.
     END
+
+    output "module_enabled" {
+      type        = bool
+      description = <<-END
+        Whether this module is enabled.
+      END
+    }
+
+    output "google_project" {
+      type        = object(google_project)
+      description = <<-END
+        All outputs of the created `google_project` resource.
+      END
+    }
+
+    output "iam" {
+      type        = list(iam)
+      description = <<-END
+        The resources created by `mineiros-io/project-iam/google` module.
+      END
+    }
   }
 
   section {

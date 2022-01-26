@@ -130,9 +130,9 @@ See [variables.tf] and [examples/] for details and use-cases.
   - [**`skip_adding_default_service_accounts`**](#attr-iam-skip_adding_default_service_accounts): *(Optional `bool`)*<a name="attr-iam-skip_adding_default_service_accounts"></a>
 
     Whether to skip adding default GCP Service Accounts to specific roles.
-    
+
     Service Accounts added to non-conditional bindings of `roles/editor`:
-    
+
     - App Engine default service account (`project-id@appspot.gserviceaccount.com`)
     - Compute Engine default service account (`project-number-compute@developer.gserviceaccount.com`)
     - Google APIs Service Agent (`project-number@cloudservices.gserviceaccount.com`)
@@ -173,15 +173,15 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 The following attributes are exported in the outputs of the module:
 
-- **`module_enabled`**
+- [**`module_enabled`**](#output-module_enabled): *(`bool`)*<a name="output-module_enabled"></a>
 
   Whether this module is enabled.
 
-- **`google_project`**
+- [**`google_project`**](#output-google_project): *(`object(google_project)`)*<a name="output-google_project"></a>
 
   All outputs of the created `google_project` resource.
 
-- **`iam`**
+- [**`iam`**](#output-iam): *(`list(iam)`)*<a name="output-iam"></a>
 
   The resources created by `mineiros-io/project-iam/google` module.
 
