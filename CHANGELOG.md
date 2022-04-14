@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add information to the README that the `project_id` needs to be unique from all others in GCP
+
 ### Changed
 
 - Upgrade Makefile from template
