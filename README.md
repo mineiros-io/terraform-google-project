@@ -89,6 +89,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 - [**`project_id`**](#var-project_id): *(**Required** `string`)*<a name="var-project_id"></a>
 
   The project ID. Changing this forces a new project to be created.
+  **Note:** The project ID is a unique string used to differentiate your project from all others in Google Cloud.
 
 - [**`iam`**](#var-iam): *(Optional `string`)*<a name="var-iam"></a>
 

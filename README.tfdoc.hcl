@@ -120,6 +120,7 @@ section {
           type        = string
           description = <<-END
             The project ID. Changing this forces a new project to be created.
+            **Note:** The project ID is a unique string used to differentiate your project from all others in Google Cloud.
           END
         }
 
