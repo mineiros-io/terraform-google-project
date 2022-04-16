@@ -107,14 +107,6 @@ section {
       section {
         title = "Main Resource Configuration"
 
-        variable "name" {
-          required    = true
-          type        = string
-          description = <<-END
-            The display name of the project.
-          END
-        }
-
         variable "project_id" {
           required    = true
           type        = string
@@ -122,6 +114,14 @@ section {
             The project ID. Changing this forces a new project to be created.
             **Note:** The project ID is a unique string used to differentiate your project from all others in Google Cloud.
           END
+        }
+
+        variable "name" {
+          type        = string
+          description = <<-END
+            The display name of the project.
+          END
+          default     = var.project
         }
 
         variable "iam" {

@@ -3,11 +3,6 @@
 # These variables must be set when using this module.
 # ---------------------------------------------------------------------------------------------------------------------
 
-variable "name" {
-  type        = string
-  description = "(Required) The display name of the project."
-}
-
 variable "project_id" {
   type        = string
   description = "(Required) The project ID. Changing this forces a new project to be created."
@@ -17,6 +12,12 @@ variable "project_id" {
 # OPTIONAL VARIABLES
 # These variables have defaults, but may be overridden.
 # ---------------------------------------------------------------------------------------------------------------------
+
+variable "name" {
+  type        = string
+  description = "(Optional) The display name of the project. Defaults to project_id."
+  default     = null
+}
 
 variable "iam" {
   type        = any

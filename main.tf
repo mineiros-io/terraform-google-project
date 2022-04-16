@@ -1,8 +1,8 @@
 resource "google_project" "project" {
   count = var.module_enabled ? 1 : 0
 
-  name       = var.name
   project_id = var.project_id
+  name       = var.name != null ? var.name : var.project_id
 
   org_id              = var.org_id
   folder_id           = var.folder_id
