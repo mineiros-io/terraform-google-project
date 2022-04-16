@@ -111,9 +111,11 @@ terradoc:
 .PHONY: clean
 clean:
 	$(call rm-command,.terraform)
+	$(call rm-command,.terratest)
 	$(call rm-command,.terraform.lock.hcl)
 	$(call rm-command,*.tfplan)
 	$(call rm-command,*/*/.terraform)
+	$(call rm-command,*/*/.terratest)
 	$(call rm-command,*/*/*.tfplan)
 	$(call rm-command,*/*/.terraform.lock.hcl)
 
