@@ -91,36 +91,56 @@ See [variables.tf] and [examples/] for details and use-cases.
   The project ID. Changing this forces a new project to be created.
   **Note:** The project ID is a unique string used to differentiate your project from all others in Google Cloud.
 
-- [**`iam`**](#var-iam): *(Optional `string`)*<a name="var-iam"></a>
+- [**`iam`**](#var-iam): *(Optional `list(iam)`)*<a name="var-iam"></a>
 
   A list of IAM access to apply to the created secret.
 
   Example:
 
   ```hcl
-  iam = [{
-    role    = "roles/viewer"
-    members = ["user:member@example.com"]
-  }]
+  iam = [
+    {
+      role    = "roles/viewer"
+      members = ["user:member@example.com"]
+    },
+    {
+      roles = [
+        "roles/editor",
+        "roles/owner",
+      ]
+      members = ["user:admin@example.com"]
+    }
+  ]
   ```
 
-  The object accepts the following attributes:
+  Each `iam` object in the list accepts the following attributes:
+
+  - [**`role`**](#attr-iam-role): *(Optional `string`)*<a name="attr-iam-role"></a>
+
+    The role that members will be assigned to.
+    Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
+    At least one of `role` or `roles` needs to be set.
+    Each role can only exist once within all elements of the list.
+    Each role can only exist once within all elements of the list unless it specifies a different condition.
+
+  - [**`roles`**](#attr-iam-roles): *(Optional `set(string)`)*<a name="attr-iam-roles"></a>
+
+    A set roles that members will be assigned to.
+    Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
+    At least one of `role` or `roles` needs to be set.
+    Each role can only exist once within all elements of the list unless it specifies a different condition.
 
   - [**`members`**](#attr-iam-members): *(Optional `set(string)`)*<a name="attr-iam-members"></a>
 
     Identities that will be granted the privilege in role. Each entry can have one of the following values:
     - `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.
     - `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.
-    - `user:{emailid}`: An email address that represents a specific Google account. For example, alice@gmail.com or joe@example.com.
-    - `serviceAccount:{emailid}`: An email address that represents a service account. For example, my-other-app@appspot.gserviceaccount.com.
-    - `group:{emailid}`: An email address that represents a Google group. For example, admins@example.com.
-    - `domain:{domain}`: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, google.com or example.com.
+    - `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.
+    - `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.
+    - `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.
+    - `domain:{domain}`: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, `google.com` or `example.com`.
 
     Default is `[]`.
-
-  - [**`role`**](#attr-iam-role): *(Optional `string`)*<a name="attr-iam-role"></a>
-
-    The role that should be applied. Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
 
   - [**`authoritative`**](#attr-iam-authoritative): *(Optional `bool`)*<a name="attr-iam-authoritative"></a>
 
@@ -161,10 +181,6 @@ See [variables.tf] and [examples/] for details and use-cases.
 ## Module Outputs
 
 The following attributes are exported in the outputs of the module:
-
-- [**`module_enabled`**](#output-module_enabled): *(`bool`)*<a name="output-module_enabled"></a>
-
-  Whether this module is enabled.
 
 - [**`google_project`**](#output-google_project): *(`object(google_project)`)*<a name="output-google_project"></a>
 

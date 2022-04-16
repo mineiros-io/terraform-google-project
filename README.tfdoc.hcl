@@ -125,16 +125,46 @@ section {
         }
 
         variable "iam" {
-          type           = string
+          type           = list(iam)
           description    = <<-END
             A list of IAM access to apply to the created secret.
           END
           readme_example = <<-END
-            iam = [{
-              role    = "roles/viewer"
-              members = ["user:member@example.com"]
-            }]
+            iam = [
+              {
+                role    = "roles/viewer"
+                members = ["user:member@example.com"]
+              },
+              {
+                roles = [
+                  "roles/editor",
+                  "roles/owner",
+                ]
+                members = ["user:admin@example.com"]
+              }
+            ]
           END
+
+          attribute "role" {
+            type        = string
+            description = <<-END
+              The role that members will be assigned to.
+              Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
+              At least one of `role` or `roles` needs to be set.
+              Each role can only exist once within all elements of the list.
+              Each role can only exist once within all elements of the list unless it specifies a different condition.
+            END
+          }
+
+          attribute "roles" {
+            type        = set(string)
+            description = <<-END
+              A set roles that members will be assigned to.
+              Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
+              At least one of `role` or `roles` needs to be set.
+              Each role can only exist once within all elements of the list unless it specifies a different condition.
+            END
+          }
 
           attribute "members" {
             type        = set(string)
@@ -143,17 +173,10 @@ section {
               Identities that will be granted the privilege in role. Each entry can have one of the following values:
               - `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.
               - `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.
-              - `user:{emailid}`: An email address that represents a specific Google account. For example, alice@gmail.com or joe@example.com.
-              - `serviceAccount:{emailid}`: An email address that represents a service account. For example, my-other-app@appspot.gserviceaccount.com.
-              - `group:{emailid}`: An email address that represents a Google group. For example, admins@example.com.
-              - `domain:{domain}`: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, google.com or example.com.
-            END
-          }
-
-          attribute "role" {
-            type        = string
-            description = <<-END
-              The role that should be applied. Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
+              - `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.
+              - `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.
+              - `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.
+              - `domain:{domain}`: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, `google.com` or `example.com`.
             END
           }
 
@@ -219,13 +242,6 @@ section {
     content = <<-END
       The following attributes are exported in the outputs of the module:
     END
-
-    output "module_enabled" {
-      type        = bool
-      description = <<-END
-        Whether this module is enabled.
-      END
-    }
 
     output "google_project" {
       type        = object(google_project)
