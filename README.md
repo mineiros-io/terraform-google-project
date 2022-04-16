@@ -128,18 +128,6 @@ See [variables.tf] and [examples/] for details and use-cases.
 
     Default is `true`.
 
-  - [**`skip_adding_default_service_accounts`**](#attr-iam-skip_adding_default_service_accounts): *(Optional `bool`)*<a name="attr-iam-skip_adding_default_service_accounts"></a>
-
-    Whether to skip adding default GCP Service Accounts to specific roles.
-
-    Service Accounts added to non-conditional bindings of `roles/editor`:
-
-    - App Engine default service account (`project-id@appspot.gserviceaccount.com`)
-    - Compute Engine default service account (`project-number-compute@developer.gserviceaccount.com`)
-    - Google APIs Service Agent (`project-number@cloudservices.gserviceaccount.com`)
-
-    Default is `false`.
-
 - [**`org_id`**](#var-org_id): *(Optional `string`)*<a name="var-org_id"></a>
 
   The numeric ID of the organization this project belongs to. Changing this forces a new project to be created. Only one of `org_id` or `folder_id` may be specified. If the `org_id` is specified then the project is created at the top level. Changing this forces the project to be migrated to the newly specified organization.
