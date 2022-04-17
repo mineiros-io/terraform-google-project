@@ -51,3 +51,4 @@ crash.log
 
 .terraform.lock.hcl
 .tool-versions
+.terratest
