@@ -228,9 +228,13 @@ section {
 
         variable "auto_create_network" {
           type        = bool
-          default     = true
+          default     = false
           description = <<-END
-            Create the `default` network automatically. If set to `false`, the default network will be deleted. Note that, for quota purposes, you will still need to have 1 network slot available to create the project successfully, even if you set `auto_create_network` to `false`, since the network will exist momentarily. It is recommended to use the `constraints/compute.skip
+            Create the `default` network automatically.
+            If kept as `false`, the default network will be deleted.
+            Note that, for quota purposes, you will still need to have 1 network slot available to create the project successfully, even if you set `auto_create_network` to `false`, since the network will exist momentarily.
+
+            It is recommended to use the `constraints/compute.skipDefaultNetworkCreation` constraint to remove the default network instead of setting `auto_create_network` to `false`.
           END
         }
       }

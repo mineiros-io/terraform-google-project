@@ -57,8 +57,15 @@ variable "labels" {
 
 variable "auto_create_network" {
   type        = bool
-  description = "(Optional) Create the 'default' network automatically. Default true. If set to false, the default network will be deleted. Note that, for quota purposes, you will still need to have 1 network slot available to create the project successfully, even if you set auto_create_network to false, since the network will exist momentarily. It is recommended to use the constraints/compute.skipDefaultNetworkCreation constraint to remove the default network instead of setting auto_create_network to false."
-  default     = true
+  description = <<END
+    (Optional)
+    Create the 'default' network automatically.
+    If kept false, the default network will be deleted.
+    Note that, for quota purposes, you will still need to have 1 network slot available to create the project successfully, even if you set auto_create_network to false, since the network will exist momentarily.
+
+    It is recommended to use the constraints/compute.skipDefaultNetworkCreation constraint to remove the default network instead of setting auto_create_network to false.
+  END
+  default     = false
 }
 
 # ------------------------------------------------------------------------------
@@ -69,12 +76,12 @@ variable "auto_create_network" {
 
 variable "module_enabled" {
   type        = bool
-  description = "(Optional) Whether to create resources within the module or not. Default is 'true'."
+  description = "(Optional) Whether to create resources within the module or not."
   default     = true
 }
 
 variable "module_depends_on" {
   type        = any
-  description = "(Optional) A list of external resources the module depends_on. Default is '[]'."
+  description = "(Optional) A list of external resources the module depends_on."
   default     = []
 }

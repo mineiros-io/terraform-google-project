@@ -176,9 +176,13 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - [**`auto_create_network`**](#var-auto_create_network): *(Optional `bool`)*<a name="var-auto_create_network"></a>
 
-  Create the `default` network automatically. If set to `false`, the default network will be deleted. Note that, for quota purposes, you will still need to have 1 network slot available to create the project successfully, even if you set `auto_create_network` to `false`, since the network will exist momentarily. It is recommended to use the `constraints/compute.skip
+  Create the `default` network automatically.
+  If kept as `false`, the default network will be deleted.
+  Note that, for quota purposes, you will still need to have 1 network slot available to create the project successfully, even if you set `auto_create_network` to `false`, since the network will exist momentarily.
 
-  Default is `true`.
+  It is recommended to use the `constraints/compute.skipDefaultNetworkCreation` constraint to remove the default network instead of setting `auto_create_network` to `false`.
+
+  Default is `false`.
 
 ## Module Outputs
 
