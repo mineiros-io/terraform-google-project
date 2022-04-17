@@ -107,14 +107,6 @@ section {
       section {
         title = "Main Resource Configuration"
 
-        variable "name" {
-          required    = true
-          type        = string
-          description = <<-END
-            The display name of the project.
-          END
-        }
-
         variable "project_id" {
           required    = true
           type        = string
@@ -124,17 +116,55 @@ section {
           END
         }
 
+        variable "name" {
+          type        = string
+          description = <<-END
+            The display name of the project.
+          END
+          default     = var.project
+        }
+
         variable "iam" {
-          type           = string
+          type           = list(iam)
           description    = <<-END
             A list of IAM access to apply to the created secret.
           END
           readme_example = <<-END
-            iam = [{
-              role    = "roles/viewer"
-              members = ["user:member@example.com"]
-            }]
+            iam = [
+              {
+                role    = "roles/viewer"
+                members = ["user:member@example.com"]
+              },
+              {
+                roles = [
+                  "roles/editor",
+                  "roles/owner",
+                ]
+                members = ["user:admin@example.com"]
+              }
+            ]
           END
+
+          attribute "role" {
+            type        = string
+            description = <<-END
+              The role that members will be assigned to.
+              Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
+              At least one of `role` or `roles` needs to be set.
+              Each role can only exist once within all elements of the list.
+              Each role can only exist once within all elements of the list unless it specifies a different condition.
+            END
+          }
+
+          attribute "roles" {
+            type        = set(string)
+            description = <<-END
+              A set roles that members will be assigned to.
+              Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
+              At least one of `role` or `roles` needs to be set.
+              Each role can only exist once within all elements of the list unless it specifies a different condition.
+            END
+          }
 
           attribute "members" {
             type        = set(string)
@@ -143,17 +173,10 @@ section {
               Identities that will be granted the privilege in role. Each entry can have one of the following values:
               - `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.
               - `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.
-              - `user:{emailid}`: An email address that represents a specific Google account. For example, alice@gmail.com or joe@example.com.
-              - `serviceAccount:{emailid}`: An email address that represents a service account. For example, my-other-app@appspot.gserviceaccount.com.
-              - `group:{emailid}`: An email address that represents a Google group. For example, admins@example.com.
-              - `domain:{domain}`: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, google.com or example.com.
-            END
-          }
-
-          attribute "role" {
-            type        = string
-            description = <<-END
-              The role that should be applied. Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
+              - `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.
+              - `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.
+              - `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.
+              - `domain:{domain}`: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, `google.com` or `example.com`.
             END
           }
 
@@ -162,20 +185,6 @@ section {
             default     = true
             description = <<-END
               Whether to exclusively set (authoritative mode) or add (non-authoritative/additive mode) members to the role.
-            END
-          }
-
-          attribute "skip_adding_default_service_accounts" {
-            type        = bool
-            default     = false
-            description = <<-END
-              Whether to skip adding default GCP Service Accounts to specific roles.
-
-              Service Accounts added to non-conditional bindings of `roles/editor`:
-
-              - App Engine default service account (`project-id@appspot.gserviceaccount.com`)
-              - Compute Engine default service account (`project-number-compute@developer.gserviceaccount.com`)
-              - Google APIs Service Agent (`project-number@cloudservices.gserviceaccount.com`)
             END
           }
         }
@@ -219,9 +228,13 @@ section {
 
         variable "auto_create_network" {
           type        = bool
-          default     = true
+          default     = false
           description = <<-END
-            Create the `default` network automatically. If set to `false`, the default network will be deleted. Note that, for quota purposes, you will still need to have 1 network slot available to create the project successfully, even if you set `auto_create_network` to `false`, since the network will exist momentarily. It is recommended to use the `constraints/compute.skip
+            Create the `default` network automatically.
+            If kept as `false`, the default network will be deleted.
+            Note that, for quota purposes, you will still need to have 1 network slot available to create the project successfully, even if you set `auto_create_network` to `false`, since the network will exist momentarily.
+
+            It is recommended to use the `constraints/compute.skipDefaultNetworkCreation` constraint to remove the default network instead of setting `auto_create_network` to `false`.
           END
         }
       }
@@ -233,13 +246,6 @@ section {
     content = <<-END
       The following attributes are exported in the outputs of the module:
     END
-
-    output "module_enabled" {
-      type        = bool
-      description = <<-END
-        Whether this module is enabled.
-      END
-    }
 
     output "google_project" {
       type        = object(google_project)
