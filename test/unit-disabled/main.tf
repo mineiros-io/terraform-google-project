@@ -10,7 +10,7 @@ module "test" {
   iam = [
     {
       role    = "roles/broswer"
-      members = ["domain:${local.domain}"]
+      members = ["domain:${local.org_domain}"]
     }
   ]
 }

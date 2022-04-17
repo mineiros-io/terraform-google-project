@@ -88,7 +88,7 @@ template/adjust:
 ## Run pre-commit hooks inside a build-tools docker container.
 .PHONY: test/docker/pre-commit
 test/docker/pre-commit: DOCKER_FLAGS += ${DOCKER_SSH_FLAGS}
-test/docker/unit-tests: DOCKER_FLAGS += -e NOCOLOR=1
+test/docker/pre-commit: DOCKER_FLAGS += -e NOCOLOR=1
 test/docker/pre-commit:
 	$(call docker-run,make test/pre-commit)
 

@@ -7,11 +7,11 @@ module "test" {
   iam = [
     {
       role    = "roles/broswer"
-      members = ["domain:${local.domain}"]
+      members = ["domain:${local.org_domain}"]
     },
     {
       role    = "roles/broswer"
-      members = ["domain:${local.domain}"]
+      members = ["domain:${local.org_domain}"]
       condition = {
         title       = "deny after 2025"
         description = "allow access until 2025"
@@ -20,7 +20,7 @@ module "test" {
     },
     {
       role    = "roles/broswer"
-      members = ["domain:${local.domain}"]
+      members = ["domain:${local.org_domain}"]
       condition = {
         title       = "allow after 2020"
         description = "allow access from 2020"
