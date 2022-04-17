@@ -22,7 +22,7 @@ module "iam" {
   module_enabled    = var.module_enabled
   module_depends_on = [var.module_depends_on]
 
-  project = google_project.project[0].project_id
+  project = try(google_project.project[0].project_id, null)
 
   role = each.value.role
 
