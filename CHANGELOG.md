@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+ - Add support for `var.computed_members_map`
+
+### Removed
+
+ - BREAKING CHANGE: Remove support for Terraform before v1.0
+ - BREAKING CHANGE: Remove support for Terraform Google Provider before v4.0
+
 ## [0.3.0] includes BREAKING CHANGES
 
 - Add support for multiple roles with different permissions.
