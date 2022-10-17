@@ -1,7 +1,7 @@
 # Set default shell to bash
 SHELL := /bin/bash -o pipefail
 
-BUILD_TOOLS_VERSION      ?= v0.15.1
+BUILD_TOOLS_VERSION      ?= v0.15.2
 BUILD_TOOLS_DOCKER_REPO  ?= mineiros/build-tools
 BUILD_TOOLS_DOCKER_IMAGE ?= ${BUILD_TOOLS_DOCKER_REPO}:${BUILD_TOOLS_VERSION}
 
@@ -123,6 +123,11 @@ test/unit-tests:
 .PHONY: terradoc
 terradoc:
 	$(call quiet-command,terradoc generate -o README.md README.tfdoc.hcl)
+
+## Generate shared configuration for tests
+.PHONY: terramate
+terramate:
+	$(call quiet-command,terramate generate)
 
 ## Clean up cache and temporary files
 .PHONY: clean
