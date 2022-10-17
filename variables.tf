@@ -57,7 +57,7 @@ variable "labels" {
 
 variable "auto_create_network" {
   type        = bool
-  description = <<END
+  description = <<-END
     (Optional)
     Create the 'default' network automatically.
     If kept false, the default network will be deleted.
@@ -66,6 +66,17 @@ variable "auto_create_network" {
     It is recommended to use the constraints/compute.skipDefaultNetworkCreation constraint to remove the default network instead of setting auto_create_network to false.
   END
   default     = false
+}
+
+variable "computed_members_map" {
+  type        = map(string)
+  description = "(Optional) A map of members to replace in 'members' to handle terraform computed values. Will be ignored when policy bindings are used."
+  default     = {}
+
+  validation {
+    condition     = alltrue([for k, v in var.computed_members_map : can(regex("^(user|serviceAccount|group|domain):", v))])
+    error_message = "The value must be a non-empty string being a valid principal type prefixed with `user:`, `serviceAccount:`, `group:` or `domain:`."
+  }
 }
 
 # ------------------------------------------------------------------------------

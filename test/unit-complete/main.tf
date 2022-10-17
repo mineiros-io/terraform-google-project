@@ -59,8 +59,8 @@ module "test1" {
   # add all required arguments
   project_id          = "unit-complete-${local.random_suffix}"
   name                = "unit-complete"
+  billing_account     = local.billing_account
   org_id              = local.org_id
-  folder_id           = "1234567"
   skip_delete         = true
   auto_create_network = true
 

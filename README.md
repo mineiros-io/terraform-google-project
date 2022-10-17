@@ -22,8 +22,8 @@ secure, and production-grade cloud infrastructure.
 - [Getting Started](#getting-started)
 - [Module Argument Reference](#module-argument-reference)
   - [Top-level Arguments](#top-level-arguments)
-    - [Module Configuration](#module-configuration)
     - [Main Resource Configuration](#main-resource-configuration)
+    - [Module Configuration](#module-configuration)
 - [Module Outputs](#module-outputs)
 - [External Documentation](#external-documentation)
   - [Google Documentation](#google-documentation)
@@ -59,26 +59,6 @@ module "terraform-google-project" {
 See [variables.tf] and [examples/] for details and use-cases.
 
 ### Top-level Arguments
-
-#### Module Configuration
-
-- [**`module_enabled`**](#var-module_enabled): *(Optional `bool`)*<a name="var-module_enabled"></a>
-
-  Specifies whether resources in the module will be created.
-
-  Default is `true`.
-
-- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(dependency)`)*<a name="var-module_depends_on"></a>
-
-  A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
-
-  Example:
-
-  ```hcl
-  module_depends_on = [
-    google_network.network
-  ]
-  ```
 
 #### Main Resource Configuration
 
@@ -141,6 +121,7 @@ See [variables.tf] and [examples/] for details and use-cases.
     - `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.
     - `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.
     - `domain:{domain}`: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, `google.com` or `example.com`.
+    - `computed:{identifier}`: An existing key from `var.computed_members_map`.
 
     Default is `[]`.
 
@@ -183,6 +164,32 @@ See [variables.tf] and [examples/] for details and use-cases.
   It is recommended to use the `constraints/compute.skipDefaultNetworkCreation` constraint to remove the default network instead of setting `auto_create_network` to `false`.
 
   Default is `false`.
+
+- [**`computed_members_map`**](#var-computed_members_map): *(Optional `map(string)`)*<a name="var-computed_members_map"></a>
+
+  A map of members to replace in `members` of various IAM settings to handle terraform computed values.
+
+  Default is `{}`.
+
+#### Module Configuration
+
+- [**`module_enabled`**](#var-module_enabled): *(Optional `bool`)*<a name="var-module_enabled"></a>
+
+  Specifies whether resources in the module will be created.
+
+  Default is `true`.
+
+- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(dependency)`)*<a name="var-module_depends_on"></a>
+
+  A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
+
+  Example:
+
+  ```hcl
+  module_depends_on = [
+    google_network.network
+  ]
+  ```
 
 ## Module Outputs
 
