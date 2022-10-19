@@ -61,7 +61,7 @@ section {
 
       ```hcl
       module "terraform-google-project" {
-        source = "github.com/mineiros-io/terraform-google-project.git?ref=v0.2.0"
+        source = "github.com/mineiros-io/terraform-google-project.git?ref=v0.4.0"
 
         name       = "My Project"
         project_id = "your-project-id"
