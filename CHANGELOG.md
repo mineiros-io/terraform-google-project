@@ -11,18 +11,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
- - Add support for `var.computed_members_map`
+- Add support for `var.computed_members_map`
+- Add support for multiple roles with different conditions.
 
 ### Removed
 
- - BREAKING CHANGE: Remove support for Terraform before v1.0
- - BREAKING CHANGE: Remove support for Terraform Google Provider before v4.0
+- BREAKING CHANGE: Remove support for Terraform before v1.0
+- BREAKING CHANGE: Remove support for Terraform Google Provider before v4.0
+- BREAKING CHANGE: Remove `module_enabled` output.
 
-## [0.3.0] includes BREAKING CHANGES
+## 0.3.0
 
-- Add support for multiple roles with different permissions.
-  This might recreate resources if conditions were used.
-- Remove `module_enabled` output.
+- broken release has been removed
 
 ## [0.2.1]
 
@@ -59,8 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial Implementation
 
 [unreleased]: https://github.com/mineiros-io/terraform-google-project/compare/v0.4.0...HEAD
-[0.4.0]: https://github.com/mineiros-io/terraform-google-project/compare/v0.3.0...v0.4.0
-[0.3.0]: https://github.com/mineiros-io/terraform-google-project/compare/v0.2.1...v0.3.0
+[0.4.0]: https://github.com/mineiros-io/terraform-google-project/compare/v0.2.1...v0.4.0
 [0.2.1]: https://github.com/mineiros-io/terraform-google-project/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/mineiros-io/terraform-google-project/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/mineiros-io/terraform-google-project/compare/v0.0.1...v0.1.0
