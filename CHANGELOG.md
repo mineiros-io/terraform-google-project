@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0]
+
+### Added
+
+- Add support for federated principals by updated IAM module to 0.5.0
+
+## [0.5.2]
+
+### Fixed
+
+- Fix version constraint to include 5.0
+
+## [0.5.1]
+
+### Added
+
+- Update child module (v0.4.0)
+
+## [0.5.0]
+
+### Added
+
+- Add support for google v5 provider
+
 ## [0.4.0]
 
 ### Added
@@ -58,7 +82,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Implementation
 
-[unreleased]: https://github.com/mineiros-io/terraform-google-project/compare/v0.4.0...HEAD
+[unreleased]: https://github.com/mineiros-io/terraform-google-project/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/mineiros-io/terraform-google-project/compare/v0.5.2...v0.6.0
+[0.5.2]: https://github.com/mineiros-io/terraform-google-project/compare/v0.5.1...v0.5.2
+[0.5.1]: https://github.com/mineiros-io/terraform-google-project/compare/v0.5.0...v0.5.1
+[0.5.0]: https://github.com/mineiros-io/terraform-google-project/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/mineiros-io/terraform-google-project/compare/v0.2.1...v0.4.0
 [0.2.1]: https://github.com/mineiros-io/terraform-google-project/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/mineiros-io/terraform-google-project/compare/v0.1.0...v0.2.0
